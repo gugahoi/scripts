@@ -1,0 +1,2 @@
+alias movierename='filebot -r --output /home/plex/downloads/complete/movies/ --db themoviedb  --action hardlink -rename'
+alias tvrename='filebot -r --action hardlink --output /home/plex/downloads/complete/tv/ --db thetvdb -non-strict -rename'
