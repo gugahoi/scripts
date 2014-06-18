@@ -30,6 +30,12 @@ def output(txt):
     print txt
     printlock.release()
 
+def rm(fname):
+    try:
+        os.remove(fname)
+    except:
+        output('Failed to remove original file {}'.format(fname))
+
 def remux(src, dst):
     # "ffmpeg -i $f -codec copy -map 0 -movflags faststart $FULLPATH$filename.tmp.mp4"
     args = ['ffmpeg', '-i', src, '-codec', 'copy', '-map', '0', '-movflags', 'faststart', '-threads', '0', dst]
@@ -39,20 +45,20 @@ def remux(src, dst):
         subprocess.check_call(args, stdout=bitbucket, stderr=bitbucket)
         output("Remux of {} completed.".format(src))
         if rmOriginal:
-            os.remove(src)
+            rm(src)
     except:
         output("ERROR: Converting {} failed.".format(src))
     bitbucket.close()
 
 def transcode(src, dst):
     # ffmpeg -i "$f" -codec:v libx264 -crf 20 -threads 4 -codec:a aac -strict -2 -movflags faststart "$FULLPATH/$filename.mp4" </dev/null >/dev/null 2>/var/log/ffmpeg.log &
-    args = ['ffmpeg', '-i', src, '-codec:v', 'libx264', '-crf', '20', '-codec:a', 'aac', '-strict', 'experimental', '-movflags', 'faststart', '-threads', '0', dst]
+    args = ['ffmpeg', '-i', src, '-codec:v', 'libx264', '-crf', '20', '-codec:a', 'aac', '-strict', 'experimental', '-movflags', 'faststart', '-threads', '2', dst]
     bitbucket = open('/dev/null')
     try:
         output("Converting {} to {}.".format(src, dst))
         subprocess.check_call(args, stdout=bitbucket, stderr=bitbucket)
         if rmOriginal:
-            os.remove(src)
+            rm(src)
         output("Conversion of {} completed.".format(src))
     except:
         output("ERROR: Converting {} failed.".format(src))
