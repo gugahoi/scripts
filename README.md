@@ -15,7 +15,8 @@ By default does not touch the original file however can be changed so that it de
 Requires: ffmpeg, ffprobe in $PATH and libx264 and aac codecs
 
 USAGE:
-> python /path/to/converter.py /path/to/directory/to/convert
+
+    python /path/to/converter.py /path/to/directory/to/convert
 
 
 TODO
@@ -30,6 +31,7 @@ alias
 filebot aliases for convenience.
 
 USAGE:
-> tvrename /path/to/input
 
-> movierename /path/to/input
+    tvrename /path/to/input
+
+    movierename /path/to/input
